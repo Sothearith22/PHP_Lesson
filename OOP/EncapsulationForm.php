@@ -48,7 +48,9 @@
 
         include "EncapsulationFormClass.php";
         $Product = new Store();
+        //assign value
         $Product->setInput($code,$name,$qty,$price);
+        //show value
         echo $Product->getCode();
         echo $Product->getName();
         echo $Product->getPrice();
@@ -56,14 +58,10 @@
         echo $Product->getTotal();
        
 
-        
-
-
     }
 
     ?>
     
-
         </tbody>
     </table>
 
