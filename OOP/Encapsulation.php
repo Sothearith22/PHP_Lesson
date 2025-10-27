@@ -40,15 +40,20 @@
  $iphone = new Phone();
  //set value to objet
  $iphone->set_name("Iphone 12");
+ 
+ echo "Name:". $iphone->get_name() ."<br>";
  $iphone->set_price(190);
+  echo "Price:".  $iphone->get_price() ."<br>";
  $iphone->set_qty(2);
+  echo  "Qty:".  $iphone->get_qty() ."<br>";
+  echo "Total:". $iphone->total();    
 
  // get 
 
  echo "Name:". $iphone->get_name() ."<br>";
- echo "Price:".  $iphone->get_price() ."<br>";
- echo  "Qty:".  $iphone->get_qty() ."<br>";
-echo "Total:". $iphone->total();
+
+
+
 
 
 $samsung = new Phone();
