@@ -8,7 +8,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 </head>
 <body>
-    <form class="w-25 shadow-lg rounded-2 p-3 mx-auto mt-5" method="post">
+    <form action="EncapsulationData.php"
+    class="w-25 shadow-lg rounded-2 p-3 mx-auto mt-5" method="post">
         <h3 class="text-center">Our Store</h3>
         <div class="mb-3">
             <label for="code" class=" form-label">Code</label>
@@ -28,42 +29,7 @@
         </div>
         <button type="submit" class="w-100 btn  btn-primary" name="send">Send</button>
     </form>
-    <table class="table w-50 mt-5 mx-auto">
-        <thead>
-            <tr>
-                <th>Code</th>
-                <th>Name</th>
-                <th>Qty</th>
-                <th>Price</th>
-                <th>Total</th>
-            </tr>
-        </thead>
-        <tbody>
-    <?php
-    if(isset($_POST['send'])){
-        $code = $_POST["code"];
-        $name = $_POST["name"];
-        $price = $_POST["price"];
-        $qty= $_POST["qty"];
-
-        include "EncapsulationFormClass.php";
-        $Product = new Store();
-        //assign value
-        $Product->setInput($code,$name,$qty,$price);
-        //show value
-        echo $Product->getCode();
-        echo $Product->getName();
-        echo $Product->getPrice();
-        echo $Product->getQty();
-        echo $Product->getTotal();
-       
-
-    }
-
-    ?>
     
-        </tbody>
-    </table>
 
 
    
