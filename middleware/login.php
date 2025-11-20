@@ -69,7 +69,7 @@
 <body>
 
     <form class="login-box" method="post">
-        <h2>Welcome Back</h2>
+        <h2>Login</h2>
 
         <input type="email" name="email" class="form-control mb-3" placeholder="Enter your email" required>
 

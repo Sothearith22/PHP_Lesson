@@ -6,6 +6,6 @@
     <title>WELCOME PAGE</title>
 </head>
 <body>
-    <div>Welcome to my website</div>
+    <div>Welcome to  my website</div>
 </body>
 </html>
