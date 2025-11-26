@@ -95,6 +95,6 @@
             $_SESSION['user'] = $email;
             header("location:dashboard.php");
         }
-    }
+    } 
 
 ?>
