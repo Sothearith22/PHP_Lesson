@@ -8,7 +8,7 @@
 </head>
 <body class="bg-light">
 
-<div class="contain mt-5">
+<div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-5">
 
@@ -17,22 +17,22 @@
 
                     <h3 class="text-center mb-4">FORM PRODUCT</h3>
 
-                    <!-- ADD ID HERE -->
+                    <!-- PRODUCT FORM -->
                     <form id="productForm" method="POST">
 
                         <div class="mb-3">
                             <label class="form-label">Product Name</label>
-                            <input type="text" id="name" class="form-control" placeholder="Enter Product Name...">
+                            <input type="text" id="name" class="form-control" placeholder="Enter Product Name..." required>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">Qty</label>
-                            <input type="number" id="qty" class="form-control" placeholder="Enter Qty...">
+                            <input type="number" id="qty" class="form-control" placeholder="Enter Qty..." required>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">Price</label>
-                            <input type="number" id="price" class="form-control" placeholder="Enter Price...">
+                            <input type="number" id="price" class="form-control" placeholder="Enter Price..." required>
                         </div>
 
                         <button type="submit" id="submit" class="btn btn-primary w-100">Submit</button>
@@ -45,15 +45,20 @@
         </div>
     </div>
 </div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
 <script>
 $(document).ready(function(){
-    $("#productForm").submit(function(e){
+
+    $("#productForm").on("submit", function(e){
         e.preventDefault();
-        let formData = new FormData(); // Create new FormData Object
+
+        let formData = new FormData();
         formData.append("pro_name", $("#name").val());
         formData.append("pro_qty", $("#qty").val());
         formData.append("pro_price", $("#price").val());
+
         $.ajax({
             url: "insertData.php",
             type: "POST",
@@ -62,9 +67,12 @@ $(document).ready(function(){
             contentType: false,
             success: function(response){
                 console.log(response);
-                if(response == "insert success"){
+
+                if(response.trim() === "insert success"){
                     alert("Inserted Successfully");
                     window.location.href = "index.php";
+                } else {
+                    alert("Insert failed: " + response);
                 }
             },
             error: function(){

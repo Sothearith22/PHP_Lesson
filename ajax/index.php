@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-    <title>Document</title>
+    <title>PHP AJAX</title>
 </head>
 <body class="bg-light">
 
@@ -32,72 +32,140 @@
                         <th>Action</th>
                     </tr>
                 </thead>
-                <tbody id="body">
-                
-                </tbody>
+                <tbody id="body"></tbody>
             </table>
         </div>
     </div>
 
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<!-- Edit Form (Hidden) -->
+<div class="container mt-4" id="formEdit" style="display:none;">
+    <div class="card">
+        <div class="card-header bg-primary text-white">Update Product</div>
+        <div class="card-body">
+            <form id="formdata">
+                <input type="hidden" id="id">
+
+                <div class="mb-3">
+                    <label class="form-label">Product Name</label>
+                    <input type="text" id="name" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Quantity</label>
+                    <input type="number" id="qty" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Price</label>
+                    <input type="number" id="price" class="form-control">
+                </div>
+
+                <button class="btn btn-success px-4">Update</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
 <script>
-    $(document).ready(function(){
-    // select data to show
+
+$(document).ready(function(){
+
+    // =================== SHOW DATA ===================
     function showData(){
         $.ajax({
             url:"select.php",
             type:"POST",
             dataType:"json",
             success:function(res){
-                console.log(res);
-                let result="";
-                $(res).each(function(index,row){
+                let result = "";
+                $(res).each(function(i,row){
                     result += `
                         <tr>
                             <td>${row.id}</td>
                             <td>${row.name}</td>
                             <td>${row.qty}</td>
                             <td>${row.price}</td>
-                            <td><a class="btn btn-danger" onClick="remove products (${row.id})">delete</a></td>
+                            <td>
+                                <button class="btn btn-danger btn-sm" onclick="removeProduct(${row.id})">Delete</button>
+                                <button class="btn btn-success btn-sm" onclick="edit(${row.id})">Edit</button>
+                            </td>
                         </tr>
                     `;
                 })
-                // document.getElementById("body").innerHTML=result;
                 $("#body").html(result);
-            },
-            error:function(err){
-                console.log(err);
             }
-        })
+        });
     }
-    // call function show data
-    showData();
-})
+
+    window.showData = showData;
+    showData(); // load on start
+
+});
+
+
+// ================= DELETE PRODUCT ==================
 function removeProduct(id){
-    console.log(id);
-    if(confirm("Are You Sure to remove product")){
+    if(confirm("Are You Sure to remove product?")){
         $.ajax({
-            url : "delete.php",
+            url:"delete.php",
             type:"POST",
-            //value
             data:{key:id},
             success:function(res){
-                console.log(res);
-                if(res == "remove successfully"){
-                    alert("remove success");
-                    showData();
-
-                }
-            },
-            error:function(err){
-                console.log(err);
+                alert(res);
+                showData();
             }
-            
-        })
+        });
     }
 }
+
+
+// ================= LOAD DATA FOR EDIT ===============
+function edit(id){
+    $.ajax({
+        url:"edit.php",
+        type:"POST",
+        data:{id:id},
+        dataType:"json",
+        success:function(res){
+            $("#id").val(res.id);
+            $("#name").val(res.name);
+            $("#qty").val(res.qty);
+            $("#price").val(res.price);
+            $("#formEdit").show();
+        }
+    });
+}
+
+
+// ================= UPDATE PRODUCT ===================
+$(document).on("submit","#formdata",function(e){
+    e.preventDefault();
+
+    let formData = new FormData();
+    formData.append("id", $("#id").val());
+    formData.append("pro_name", $("#name").val());
+    formData.append("pro_qty", $("#qty").val());
+    formData.append("pro_price", $("#price").val());
+
+    $.ajax({
+        url:"update.php",
+        type:"POST",
+        data:formData,
+        processData:false,
+        contentType:false,
+        success:function(response){
+            alert(response);
+            $("#formEdit").hide();
+            showData();
+        }
+    });
+});
 
 </script>
 </body>
