@@ -53,7 +53,7 @@ if (isset($_POST['submit'])) {
 
         $insert = "INSERT INTO userimg(name, email, img) 
                    VALUES ('$name', '$email', '$img')";
-
+    
         $query = mysqli_query($conn, $insert);
 
         if ($query) {

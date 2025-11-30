@@ -10,7 +10,7 @@ while($row=mysqli_fetch_assoc($select_send)){
                 <td>$row[name]</td>
                 <td>$row[email]</td>
                 <td>
-                    <img src='./uploads/{$row['img']}'  alt='$row[name]' style='width:50px;height:50px'>
+                    <img src='./uploads/{$row['img']}'  alt='$row[name]' style='width:120px;height:150px'>
                 </td>
                  <td> <a href='remove.php?id=$row[id]' 
                       class='btn btn-danger'
