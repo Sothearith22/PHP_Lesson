@@ -32,7 +32,9 @@
                         <th>Action</th>
                     </tr>
                 </thead>
-                <tbody id="body"></tbody>
+                <tbody id="body">
+                    
+                </tbody>
             </table>
         </div>
     </div>
